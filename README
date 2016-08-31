@@ -1,0 +1,1 @@
+The schedulers currently supported are: Sun Grid Engine (SGE), Simple Linux Utility for Resource Management (Slurm). If you would like to use the software with a different scheduler, you should implement the scheduler specific instructions in the script_scheduler_writer.py file. Follow the pattern set to implement it and later test it in the unitTest function.
