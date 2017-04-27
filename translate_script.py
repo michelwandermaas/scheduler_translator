@@ -46,6 +46,8 @@ class translator:
                     sys.stderr.write("Command \"" + x + "\" not supported. Use --helpUGE to see all the supported commands or --force to ignore unknown commands.\n")
                     exit(1)
 
+# TW: Assumes single whitespaces.
+# TW: Terminal "-l" replacement seems very generic, wildcardy?
         command = command.replace("-N ", "JOB_NAME ", 1)  # replace the first occurrance
 
         command = command.replace("-pe pe_slots ", "RESOURCE_NODES ", 1)
@@ -135,8 +137,7 @@ class translator:
         if (type == "n"):
             ret = "NEVER "
             return ret
-        type = type.split()
-        if ("abe" in type or "ae" in type):
+        if ("a" in type and "e" in type):
             ret = "ALWAYS "
             return ret
         if ("b" in type):
@@ -235,8 +236,9 @@ class translator:
                             emailType = parseEmail(emailType.replace(" ", ""))
                             auxLine = auxLine.replace(formatMailType, "")
                         auxLine = auxLine.replace("\n", "")
-                        if (auxLine.replace(" ","") != ""):
-                            default_config += auxLine.split(formatDefaultConfig)[1]
+                        #print(auxLine.replace(" ","").replace(formatDefaultConfig, ""))
+                        if (auxLine.replace(" ","").replace(formatDefaultConfig, "") != ""):
+                            default_config += self._parseUGECommand(auxLine.split(formatDefaultConfig)[1])
                     elif (line[0] == "#"):  # this is a comment
                         self.scriptWriter.addComment(line)
                     else:  # either a JOB, LINE or LINE_PARSED

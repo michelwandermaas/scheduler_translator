@@ -521,6 +521,8 @@ class script_scheduler_writer:
         elif (self.scheduler == "SLURM"):
             command = command.replace("TASK_ID","$SLURM_TASK_ID")
 
+# TW: No support for "-l h_rt"
+# TW: This seems not to work...
         if (self.scheduler == "UGE"):
             command = command.replace("RESOURCE_MEM ", "-l ram.c=", 1)
             command = self._deleteOtherOccurances(command, "RESOURCE_MEM", 1)
@@ -558,6 +560,7 @@ class script_scheduler_writer:
             command = command.replace("OUTPUT_CURRENT_DIR", "", 1)
             command = self._deleteOtherOccurances(command, "OUTPUT_CURRENT_DIR", 1)
 
+# TW: doesn't support UGE "-v environment_variable=value"
         return command
 
 
